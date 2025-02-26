@@ -1,2 +1,30 @@
-<h1>Books#index</h1>
-<p>Find me in app/views/books/index.html.erb</p>
+<h1>Library Books</h1>
+
+<div class="row">
+  <% @books.each do |book| %>
+    <div class="col-md-4 mb-4">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title"><%= book.title %></h5>
+          <h6 class="card-subtitle mb-2 text-muted">by <%= book.author %></h6>
+          <p class="card-text">
+            <strong>ISBN:</strong> <%= book.isbn %><br>
+            <strong>Status:</strong> 
+            <% if book.available? %>
+              <span class="badge bg-success">Available</span>
+            <% else %>
+              <span class="badge bg-danger">On Loan</span>
+            <% end %>
+          </p>
+          <%= link_to 'View Details', book, class: 'btn btn-primary btn-sm' %>
+          <%= link_to 'Edit', edit_book_path(book), class: 'btn btn-secondary btn-sm' %>
+          <%= link_to 'Delete', book, method: :delete, data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' }, class: 'btn btn-danger btn-sm' %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+<div class="mt-4">
+  <%= link_to 'Add New Book', new_book_path, class: 'btn btn-success' %>
+</div>
