@@ -4,6 +4,7 @@ class Book < ApplicationRecord
 
   validates :title, presence: true
   validates :author, presence: true
+  validates :isbn, presence: true, uniqueness: true
   validates :publication_year, numericality: { 
     allow_nil: true,
     only_integer: true, 
