@@ -1,2 +1,139 @@
-<h1>Books#show</h1>
-<p>Find me in app/views/books/show.html.erb</p>
+<div class="row">
+  <div class="col-md-8">
+    <h1><%= @book.title %></h1>
+    <h4 class="text-muted">by <%= @book.author %></h4>
+
+    <div class="card mb-4">
+      <div class="card-body">
+        <p><strong>ISBN:</strong> <%= @book.isbn %></p>
+        <p><strong>Publisher:</strong> <%= @book.publisher %></p>
+        <p><strong>Publication Year:</strong> <%= @book.publication_year %></p>
+        <p><strong>Description:</strong> <%= @book.description %></p>
+        <p>
+          <strong>Status:</strong>
+          <% if @book.available? %>
+            <span class="badge bg-success">Available</span>
+          <% else %>
+            <span class="badge bg-danger">On Loan</span>
+            <% if @book.current_loan %>
+              to <%= @book.current_loan.borrower.name %>
+              until <%= @book.current_loan.due_date.strftime("%B %d, %Y") %>
+            <% end %>
+          <% end %>
+        </p>
+
+        <div class="mt-3">
+          <%= link_to 'Edit Book', edit_book_path(@book), class: 'btn btn-primary' %>
+          <%= link_to 'Back to Books', books_path, class: 'btn btn-secondary' %>
+          
+          <% if @book.available? %>
+            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#borrowModal">
+              Borrow this Book
+            </button>
+          <% else %>
+            <%= button_to 'Return Book', return_book_path(@book), method: :patch, class: 'btn btn-warning' %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+    <h3>Loan History</h3>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Borrower</th>
+          <th>Borrowed Date</th>
+          <th>Due Date</th>
+          <th>Returned Date</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @loans.each do |loan| %>
+          <tr>
+            <td><%= link_to loan.borrower.name, borrower_path(loan.borrower) %></td>
+            <td><%= loan.borrowed_date.strftime("%B %d, %Y") %></td>
+            <td><%= loan.due_date.strftime("%B %d, %Y") %></td>
+            <td><%= loan.returned_date.strftime("%B %d, %Y") if loan.returned_date %></td>
+            <td>
+              <% if loan.returned_date.nil? %>
+                <span class="badge bg-primary">Active</span>
+                <% if loan.due_date < Date.today %>
+                  <span class="badge bg-danger">Overdue</span>
+                <% end %>
+              <% else %>
+                <span class="badge bg-success">Returned</span>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Borrow Modal -->
+<div class="modal fade" id="borrowModal" tabindex="-1" aria-labelledby="borrowModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="borrowModalLabel">Borrow "<%= @book.title %>"</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <%= form_with(model: [@book, @loan], url: book_loans_path(@book), local: true) do |f| %>
+        <div class="modal-body">
+          <div class="mb-3">
+            <label for="borrower_name" class="form-label">Borrower Name</label>
+            <input type="text" class="form-control" id="borrower_name" required>
+            <%= f.hidden_field :borrower_id %>
+          </div>
+          
+          <div class="mb-3">
+            <label for="due_date" class="form-label">Due Date</label>
+            <%= f.date_field :due_date, class: 'form-control', value: (Date.today + 14.days).to_s %>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <%= f.submit "Borrow Book", class: 'btn btn-primary' %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const borrowerNameInput = document.getElementById('borrower_name');
+    const borrowerIdInput = document.querySelector('input[name="loan[borrower_id]"]');
+    
+    borrowerNameInput.addEventListener('blur', function() {
+      if (borrowerNameInput.value.trim() === '') return;
+      
+      fetch('<%= find_or_create_borrower_path %>', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').content
+        },
+        body: JSON.stringify({
+          borrower: {
+            name: borrowerNameInput.value.trim()
+          }
+        })
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.errors) {
+          alert('Error: ' + data.errors.join(', '));
+        } else {
+          borrowerIdInput.value = data.id;
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        alert('An error occurred while processing the borrower information');
+      });
+    });
+  });
+</script>
