@@ -12,18 +12,17 @@ A simple Ruby on Rails application for managing a book lending library. This app
 
 ## Technologies
 
-- Ruby 3.2.2
-- Rails 8.0.0
-- PostgreSQL
+- Ruby 3.4.2
+- Rails 8.0.1
+- SQLite3
 - Bootstrap 5
-- RSpec for testing
 
 ## Setup and Installation
 
 ### Prerequisites
 
-- Ruby 3.2.2 or higher
-- Rails 8.0.0
+- Ruby 3.4.2
+- Rails 8.0.1
 - SQLite3
 
 ### Installation Steps
