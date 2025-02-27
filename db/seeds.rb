@@ -53,19 +53,19 @@ puts "Created #{created_books.size} books"
 puts "Creating borrowers..."
 borrowers = [
   {
-    name: "John Smith",
-    email: "john.smith@example.com",
-    phone: "555-123-4567"
+    name: "John Mutua",
+    email: "mutua@gmail.com",
+    phone: "0745678905"
   },
   {
-    name: "Jane Doe",
-    email: "jane.doe@example.com",
-    phone: "555-987-6543"
+    name: "Jane Anyango",
+    email: "anyango@gmail.com",
+    phone: "0745678905"
   },
   {
-    name: "Alice Johnson",
-    email: "alice.johnson@example.com",
-    phone: "555-456-7890"
+    name: "Alice Nyambu",
+    email: "nyambu@gmail.com",
+    phone: "0745678905"
   }
 ]
 

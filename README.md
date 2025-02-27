@@ -28,22 +28,22 @@ A simple Ruby on Rails application for managing a book lending library. This app
 ### Installation Steps
 
 1. Clone the repository:
-   git clone <https://github.com/MuliJob/book_library_app.git>
-   cd book-lending-library
+   `git clone <https://github.com/MuliJob/book_library_app.git>`
+   `cd book-lending-library`
 
 2. Install dependencies:
-   bundle install
+   `bundle install`
 
 3. Set up the database:
-   rails db:create
-   rails db:migrate
-   rails db:seed
+   `rails db:create`
+   `rails db:migrate`
+   `rails db:seed`
 
 4. Start the server:
-   rails server
+   `rails server`
 
 5. Open your browser and navigate to:
-   <http://localhost:3000>
+   `<http://localhost:3000>`
 
 ## Database Structure
 
@@ -80,7 +80,16 @@ The application has the following models:
 The application includes both model and controller test.
 
 To run the tests:
-rails test
+`rails test`
+
+## API Endpoints
+
+`- GET /books -> Getting all books`
+`- GET /books/:id -> Displaying book details`
+`- POST /books/new -> Adding a new book`
+`- PATCH /books/:id/edit -> Editing an existing book`
+`- GET /borrowers -> Getting all borrowers`
+`- GET /borrowers/:id -> Borrower details`
 
 ### Test Coverage
 
