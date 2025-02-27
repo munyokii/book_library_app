@@ -29,7 +29,7 @@ A simple Ruby on Rails application for managing a book lending library. This app
 
 1. Clone the repository:
    - `git clone` <https://github.com/MuliJob/book_library_app.git>
-   - `cd book_lending_library`
+   - `cd book_library_app`
 
 2. Install dependencies:
    - `bundle install`
