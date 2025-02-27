@@ -28,22 +28,22 @@ A simple Ruby on Rails application for managing a book lending library. This app
 ### Installation Steps
 
 1. Clone the repository:
-   `git clone <https://github.com/MuliJob/book_library_app.git>`
-   `cd book-lending-library`
+   - `git clone` <https://github.com/MuliJob/book_library_app.git>
+   - `cd book_lending_library`
 
 2. Install dependencies:
-   `bundle install`
+   - `bundle install`
 
 3. Set up the database:
-   `rails db:create`
-   `rails db:migrate`
-   `rails db:seed`
+   - `rails db:create`
+   - `rails db:migrate`
+   - `rails db:seed`
 
 4. Start the server:
-   `rails server`
+   - `rails server`
 
 5. Open your browser and navigate to:
-   `<http://localhost:3000>`
+   - <http://localhost:3000>
 
 ## Database Structure
 
@@ -80,16 +80,22 @@ The application has the following models:
 The application includes both model and controller test.
 
 To run the tests:
-`rails test`
+
+- `rails test`
 
 ## API Endpoints
 
-`- GET /books -> Getting all books`
-`- GET /books/:id -> Displaying book details`
-`- POST /books/new -> Adding a new book`
-`- PATCH /books/:id/edit -> Editing an existing book`
-`- GET /borrowers -> Getting all borrowers`
-`- GET /borrowers/:id -> Borrower details`
+### Books
+
+- `GET /books` -> Getting all books
+- `GET /books/:id` -> Displaying book details
+- `POST /books/new` -> Adding a new book
+- `PATCH /books/:id/edit` -> Editing an existing book
+
+### Borrowers
+
+- `GET /borrowers` -> Getting all borrowers
+- `GET /borrowers/:id` -> Borrower details
 
 ### Test Coverage
 
@@ -115,18 +121,21 @@ To run the tests:
 
 For production deployment:
 
-1. Update your database configuration in `config/database.yml`
+1. Update your database configuration in `config/database.yml` as needed.
 2. Set up environment variables for sensitive information
 3. Precompile assets:
-   RAILS_ENV=production rails assets:precompile
+   - `RAILS_ENV=production rails assets:precompile`
 4. Run with a production server like Puma or Passenger
 
 ## Contributing
 
 1. Fork the repository
-2. Create your feature branch: `git switch -b my-new-feature`
-3. Commit your changes: `git commit -m 'Add some feature'`
-4. Push to the branch: `git push origin my-new-feature`
+2. Create your feature branch:
+    - `git switch -b my-new-feature`
+3. Commit your changes:
+    - `git commit -m 'Add some feature'`
+4. Push to the branch:
+    - `git push origin my-new-feature`
 5. Submit a pull request
 
 ## License
